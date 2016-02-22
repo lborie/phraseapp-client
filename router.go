@@ -6,11 +6,12 @@ import (
 	"os"
 	"time"
 
+	"github.com/bgentry/speakeasy"
 	"github.com/dynport/dgtk/cli"
 	"github.com/phrase/phraseapp-go/phraseapp"
 )
 
-const PHRASEAPP_CLIENT_VERSION = "1.1.11"
+const PHRASEAPP_CLIENT_VERSION = "test"
 
 func router(cfg *phraseapp.Config) *cli.Router {
 	r := cli.NewRouter()
@@ -418,11 +419,11 @@ func router(cfg *phraseapp.Config) *cli.Router {
 }
 
 func infoCommand() error {
-	fmt.Printf("Built at 2016-02-11 12:36:07.715436034 +0100 CET\n")
-	fmt.Println("PhraseApp Client version:", "1.1.11")
-	fmt.Println("PhraseApp API Client revision:", "2c32a624c8c112945c5a8f001add441945fbb6e0")
-	fmt.Println("PhraseApp Client revision:", "cd43fdb3d97b8658de259f4f6f97b11571a390aa")
-	fmt.Println("PhraseApp Docs revision:", "5f9b1b39e1d74820264284d6290a5fd6f850113e")
+	fmt.Printf("Built at 2016-02-22 11:17:26.266644438 +0100 CET\n")
+	fmt.Println("PhraseApp Client version:", "test")
+	fmt.Println("PhraseApp API Client revision:", "4408fada704ed6c74d7eabafb2495d35d5cf11eb")
+	fmt.Println("PhraseApp Client revision:", "5c4c1543471b06e64e2dacbaf97291c569bc1cd6")
+	fmt.Println("PhraseApp Docs revision:", "40bd5530817f6dfb81132b4d56f5e36b32893561")
 	return nil
 }
 
@@ -457,7 +458,7 @@ func (cmd *AuthorizationCreate) Run() error {
 		params.Scopes = cmd.Scopes
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -479,7 +480,7 @@ type AuthorizationDelete struct {
 
 func (cmd *AuthorizationDelete) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -501,7 +502,7 @@ type AuthorizationShow struct {
 
 func (cmd *AuthorizationShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -548,7 +549,7 @@ func (cmd *AuthorizationUpdate) Run() error {
 		params.Scopes = cmd.Scopes
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -571,7 +572,7 @@ type AuthorizationsList struct {
 
 func (cmd *AuthorizationsList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -608,7 +609,7 @@ func (cmd *BlacklistedKeyCreate) Run() error {
 		params.Name = cmd.Name
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -631,7 +632,7 @@ type BlacklistedKeyDelete struct {
 
 func (cmd *BlacklistedKeyDelete) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -654,7 +655,7 @@ type BlacklistedKeyShow struct {
 
 func (cmd *BlacklistedKeyShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -692,7 +693,7 @@ func (cmd *BlacklistedKeyUpdate) Run() error {
 		params.Name = cmd.Name
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -717,7 +718,7 @@ type BlacklistedKeysList struct {
 
 func (cmd *BlacklistedKeysList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -755,7 +756,7 @@ func (cmd *CommentCreate) Run() error {
 		params.Message = cmd.Message
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -779,7 +780,7 @@ type CommentDelete struct {
 
 func (cmd *CommentDelete) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -803,7 +804,7 @@ type CommentMarkCheck struct {
 
 func (cmd *CommentMarkCheck) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -827,7 +828,7 @@ type CommentMarkRead struct {
 
 func (cmd *CommentMarkRead) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -851,7 +852,7 @@ type CommentMarkUnread struct {
 
 func (cmd *CommentMarkUnread) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -875,7 +876,7 @@ type CommentShow struct {
 
 func (cmd *CommentShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -914,7 +915,7 @@ func (cmd *CommentUpdate) Run() error {
 		params.Message = cmd.Message
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -940,7 +941,7 @@ type CommentsList struct {
 
 func (cmd *CommentsList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -963,7 +964,7 @@ type FormatsList struct {
 
 func (cmd *FormatsList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1065,7 +1066,7 @@ func (cmd *KeyCreate) Run() error {
 		params.XmlSpacePreserve = cmd.XmlSpacePreserve
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1088,7 +1089,7 @@ type KeyDelete struct {
 
 func (cmd *KeyDelete) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1111,7 +1112,7 @@ type KeyShow struct {
 
 func (cmd *KeyShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1214,7 +1215,7 @@ func (cmd *KeyUpdate) Run() error {
 		params.XmlSpacePreserve = cmd.XmlSpacePreserve
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1256,7 +1257,7 @@ func (cmd *KeysDelete) Run() error {
 		params.Q = cmd.Q
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1311,7 +1312,7 @@ func (cmd *KeysList) Run() error {
 		params.Sort = cmd.Sort
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1366,7 +1367,7 @@ func (cmd *KeysSearch) Run() error {
 		params.Sort = cmd.Sort
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1413,7 +1414,7 @@ func (cmd *KeysTag) Run() error {
 		params.Tags = cmd.Tags
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1460,7 +1461,7 @@ func (cmd *KeysUntag) Run() error {
 		params.Tags = cmd.Tags
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1522,7 +1523,7 @@ func (cmd *LocaleCreate) Run() error {
 		params.SourceLocaleID = cmd.SourceLocaleID
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1545,7 +1546,7 @@ type LocaleDelete struct {
 
 func (cmd *LocaleDelete) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1615,7 +1616,7 @@ func (cmd *LocaleDownload) Run() error {
 		params.Tag = cmd.Tag
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1639,7 +1640,7 @@ type LocaleShow struct {
 
 func (cmd *LocaleShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1702,7 +1703,7 @@ func (cmd *LocaleUpdate) Run() error {
 		params.SourceLocaleID = cmd.SourceLocaleID
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1727,7 +1728,7 @@ type LocalesList struct {
 
 func (cmd *LocalesList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1750,7 +1751,7 @@ type OrderConfirm struct {
 
 func (cmd *OrderConfirm) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1847,7 +1848,7 @@ func (cmd *OrderCreate) Run() error {
 		params.UnverifyTranslationsUponDelivery = cmd.UnverifyTranslationsUponDelivery
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1870,7 +1871,7 @@ type OrderDelete struct {
 
 func (cmd *OrderDelete) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1893,7 +1894,7 @@ type OrderShow struct {
 
 func (cmd *OrderShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1918,7 +1919,7 @@ type OrdersList struct {
 
 func (cmd *OrdersList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1963,7 +1964,7 @@ func (cmd *ProjectCreate) Run() error {
 		params.SharesTranslationMemory = cmd.SharesTranslationMemory
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -1985,7 +1986,7 @@ type ProjectDelete struct {
 
 func (cmd *ProjectDelete) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2007,7 +2008,7 @@ type ProjectShow struct {
 
 func (cmd *ProjectShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2054,7 +2055,7 @@ func (cmd *ProjectUpdate) Run() error {
 		params.SharesTranslationMemory = cmd.SharesTranslationMemory
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2077,7 +2078,7 @@ type ProjectsList struct {
 
 func (cmd *ProjectsList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2097,7 +2098,7 @@ type ShowUser struct {
 
 func (cmd *ShowUser) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2194,7 +2195,7 @@ func (cmd *StyleguideCreate) Run() error {
 		params.VocabularyType = cmd.VocabularyType
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2217,7 +2218,7 @@ type StyleguideDelete struct {
 
 func (cmd *StyleguideDelete) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2240,7 +2241,7 @@ type StyleguideShow struct {
 
 func (cmd *StyleguideShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2338,7 +2339,7 @@ func (cmd *StyleguideUpdate) Run() error {
 		params.VocabularyType = cmd.VocabularyType
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2363,7 +2364,7 @@ type StyleguidesList struct {
 
 func (cmd *StyleguidesList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2400,7 +2401,7 @@ func (cmd *TagCreate) Run() error {
 		params.Name = cmd.Name
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2423,7 +2424,7 @@ type TagDelete struct {
 
 func (cmd *TagDelete) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2446,7 +2447,7 @@ type TagShow struct {
 
 func (cmd *TagShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2471,7 +2472,7 @@ type TagsList struct {
 
 func (cmd *TagsList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2533,7 +2534,7 @@ func (cmd *TranslationCreate) Run() error {
 		params.Unverified = cmd.Unverified
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2556,7 +2557,7 @@ type TranslationShow struct {
 
 func (cmd *TranslationShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2609,7 +2610,7 @@ func (cmd *TranslationUpdate) Run() error {
 		params.Unverified = cmd.Unverified
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2660,7 +2661,7 @@ func (cmd *TranslationsByKey) Run() error {
 		params.Sort = cmd.Sort
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2711,7 +2712,7 @@ func (cmd *TranslationsByLocale) Run() error {
 		params.Sort = cmd.Sort
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2758,7 +2759,7 @@ func (cmd *TranslationsExclude) Run() error {
 		params.Sort = cmd.Sort
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2805,7 +2806,7 @@ func (cmd *TranslationsInclude) Run() error {
 		params.Sort = cmd.Sort
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2855,7 +2856,7 @@ func (cmd *TranslationsList) Run() error {
 		params.Sort = cmd.Sort
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2905,7 +2906,7 @@ func (cmd *TranslationsSearch) Run() error {
 		params.Sort = cmd.Sort
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2952,7 +2953,7 @@ func (cmd *TranslationsUnverify) Run() error {
 		params.Sort = cmd.Sort
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -2999,7 +3000,7 @@ func (cmd *TranslationsVerify) Run() error {
 		params.Sort = cmd.Sort
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3081,7 +3082,7 @@ func (cmd *UploadCreate) Run() error {
 		params.UpdateTranslations = cmd.UpdateTranslations
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3104,7 +3105,7 @@ type UploadShow struct {
 
 func (cmd *UploadShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3129,7 +3130,7 @@ type UploadsList struct {
 
 func (cmd *UploadsList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3153,7 +3154,7 @@ type VersionShow struct {
 
 func (cmd *VersionShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3179,7 +3180,7 @@ type VersionsList struct {
 
 func (cmd *VersionsList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3231,7 +3232,7 @@ func (cmd *WebhookCreate) Run() error {
 		params.Events = cmd.Events
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3254,7 +3255,7 @@ type WebhookDelete struct {
 
 func (cmd *WebhookDelete) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3277,7 +3278,7 @@ type WebhookShow struct {
 
 func (cmd *WebhookShow) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3300,7 +3301,7 @@ type WebhookTest struct {
 
 func (cmd *WebhookTest) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3353,7 +3354,7 @@ func (cmd *WebhookUpdate) Run() error {
 		params.Events = cmd.Events
 	}
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3378,7 +3379,7 @@ type WebhooksList struct {
 
 func (cmd *WebhooksList) Run() error {
 
-	client, err := phraseapp.NewClient(cmd.Config.Credentials)
+	client, err := newClient(cmd.Config.Credentials)
 	if err != nil {
 		return err
 	}
@@ -3390,4 +3391,13 @@ func (cmd *WebhooksList) Run() error {
 	}
 
 	return json.NewEncoder(os.Stdout).Encode(&res)
+}
+
+func newClient(creds *phraseapp.Credentials) (*phraseapp.Client, error) {
+	cl, err := phraseapp.NewClient(creds)
+	if err != nil {
+		return nil, err
+	}
+	cl.AskForPasswordFunc = speakeasy.Ask
+	return cl, nil
 }

@@ -67,7 +67,7 @@ type Source struct {
 
 func (src *Source) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	m := map[string]interface{}{}
-	err := phraseapp.ParseYAMLToMap(unmarshal, map[string]interface{}{
+	err := phraseapp.ParseYAMLToMap(yaml.Marshal, unmarshal, map[string]interface{}{
 		"file":         &src.File,
 		"project_id":   &src.ProjectID,
 		"access_token": &src.AccessToken,

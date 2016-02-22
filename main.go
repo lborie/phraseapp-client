@@ -3,6 +3,8 @@ package main
 import (
 	"os"
 
+	"gopkg.in/yaml.v2"
+
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -20,7 +22,7 @@ func main() {
 func Run() {
 	validateVersion()
 
-	cfg, err := phraseapp.ReadConfig()
+	cfg, err := phraseapp.ReadConfig(yaml.Unmarshal)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		os.Exit(2)

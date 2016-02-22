@@ -61,12 +61,12 @@ type PullParams struct {
 
 func (tgt *Target) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	m := map[string]interface{}{}
-	err := phraseapp.ParseYAMLToMap(unmarshal, map[string]interface{}{
-		"file": &tgt.File,
-		"project_id": &tgt.ProjectID,
+	err := phraseapp.ParseYAMLToMap(yaml.Marshal, unmarshal, map[string]interface{}{
+		"file":         &tgt.File,
+		"project_id":   &tgt.ProjectID,
 		"access_token": &tgt.AccessToken,
-		"file_format": &tgt.FileFormat,
-		"params": &m,
+		"file_format":  &tgt.FileFormat,
+		"params":       &m,
 	})
 	if err != nil {
 		return err
@@ -92,8 +92,8 @@ func (target *Target) CheckPreconditions() error {
 
 	if strings.Count(target.File, "*") > 0 {
 		return fmt.Errorf(
-			"File pattern for 'pull' cannot include any 'stars' *. Please specify direct and valid paths with file name!\n"+
-			"http://docs.phraseapp.com/developers/cli/configuration/#targets",
+			"File pattern for 'pull' cannot include any 'stars' *. Please specify direct and valid paths with file name!\n" +
+				"http://docs.phraseapp.com/developers/cli/configuration/#targets",
 		)
 	}
 
