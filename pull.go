@@ -57,6 +57,7 @@ type Target struct {
 type PullParams struct {
 	phraseapp.LocaleDownloadParams
 	LocaleID string
+	RegionPrefix string
 }
 
 func (tgt *Target) UnmarshalYAML(unmarshal func(interface{}) error) error {
@@ -80,6 +81,15 @@ func (tgt *Target) UnmarshalYAML(unmarshal func(interface{}) error) error {
 		// Must delete the param from the map as the LocaleDownloadParams type
 		// doesn't support this one and the apply method would return an error.
 		delete(m, "locale_id")
+	}
+
+	if v, found := m["region_prefix"]; found {
+		if tgt.Params.RegionPrefix, err = phraseapp.ValidateIsString("params.region_prefix", v); err != nil {
+			return err
+		}
+		// Must delete the param from the map as the LocaleDownloadParams type
+		// doesn't support this one and the apply method would return an error.
+		delete(m, "region_prefix")
 	}
 	return tgt.Params.ApplyValuesFromMap(m)
 
@@ -132,6 +142,7 @@ func (target *Target) Pull(client *phraseapp.Client) error {
 	localeIdToFileIsDistinct := (target.GetLocaleID() != "" && len(localeFiles) == 1)
 
 	for _, localeFile := range localeFiles {
+
 		err := createFile(localeFile.Path)
 		if err != nil {
 			return err
@@ -204,6 +215,12 @@ func (target *Target) LocaleFiles() (LocaleFiles, error) {
 			return nil, err
 		}
 
+		if target.Params.RegionPrefix != "" && target.HasLocaleRegion(remoteLocale.Code) {
+			fmt.Println(target.Params.RegionPrefix)
+			fmt.Println(remoteLocale.Code)
+		}
+
+
 		localeFile := &LocaleFile{
 			Name:       remoteLocale.Name,
 			ID:         remoteLocale.ID,
@@ -234,6 +251,10 @@ func (target *Target) IsValidLocale(locale *phraseapp.Locale, localPath string) 
 		return fmt.Errorf("Locale code is not set for Locale with ID: %s but locale_code is used in file name", locale.ID)
 	}
 	return nil
+}
+
+func (target *Target) HasLocaleRegion(localeCode string) bool {
+	return strings.Contains(localeCode, "-")
 }
 
 func (target *Target) ReplacePlaceholders(localeFile *LocaleFile) (string, error) {

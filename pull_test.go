@@ -18,6 +18,21 @@ func getBaseTarget() *Target {
 	return target
 }
 
+func getTargetWithRegionPrefix(prefix string) *Target {
+	target := &Target{
+		File:          "./tests/<locale_code>.yml",
+		ProjectID:     "project-id",
+		AccessToken:   "access-token",
+		FileFormat:    "yml",
+		Params:        new(PullParams),
+		RemoteLocales: getBaseLocales(),
+	}
+
+	target.Params.RegionPrefix = prefix
+
+	return target
+}
+
 func TestPullPreconditions(t *testing.T) {
 	target := getBaseTarget()
 	for _, file := range []string{
@@ -102,6 +117,40 @@ func TestTargetLocaleFiles(t *testing.T) {
 	}
 }
 
+func TestTargetLocaleFilesWithRegionPrefix(t *testing.T) {
+	target := getTargetWithRegionPrefix("r")
+	localeFiles, err := target.LocaleFiles()
+
+	if err != nil {
+		t.Errorf("Should not fail with: %s", err.Error())
+	}
+
+	enPath, _ := filepath.Abs("./tests/en.yml")
+	dePath, _ := filepath.Abs("./tests/de-rDE.yml")
+	expectedFiles := []*LocaleFile{
+		&LocaleFile{
+			Name: "english",
+			Code:  "en",
+			ID:   "en-locale-id",
+			Path: enPath,
+		},
+		&LocaleFile{
+			Name: "german",
+			Code:  "de-de",
+			ID:   "de-locale-id",
+			Path: dePath,
+		},
+	}
+
+	if len(localeFiles) == len(expectedFiles) {
+		if err = compareLocaleFiles(localeFiles, expectedFiles); err != nil {
+			t.Errorf(err.Error())
+		}
+	} else {
+		t.Errorf("LocaleFiles should contain %v and not %v", expectedFiles, localeFiles)
+	}
+}
+
 func TestReplacePlaceholders(t *testing.T) {
 	target := getBaseTarget()
 	target.File = "./<locale_code>/<tag>/<locale_name>.yml"
@@ -120,5 +169,19 @@ func TestReplacePlaceholders(t *testing.T) {
 
 	if !strings.HasSuffix(newPath, "/en/abc/english.yml") {
 		t.Errorf("Expected the new path to eql '%s' and not %s", "/en/abc/english.yml", newPath)
+	}
+}
+
+func TestLocaleCodeHasRegion(t *testing.T) {
+	target := getBaseTarget()
+	localeWithRegion := "de-DE"
+	localeWithoutRegion := "de"
+
+	if ( target.HasLocaleRegion(localeWithoutRegion)) {
+		t.Errorf("LocaleCode de should be %v and not %v", false, true)
+	}
+
+	if ( ! target.HasLocaleRegion(localeWithRegion) ) {
+		t.Errorf("LocaleCode de-DE should be %v and not %v", true, false)
 	}
 }
