@@ -39,7 +39,7 @@ func ValidPath(file, formatName, formatExtension string) error {
 
 	if formatExtension != "" && formatExtension != fileExtension {
 		return fmt.Errorf(
-			"File extension %q does not equal %q (format: %q) for file %q.\nFor more information see http://docs.phraseapp.com/guides/formats/%s",
+			"File extension %q does not equal %q (format: %q) for file %q.\nFor more information see http://docs.phraseapp.com/docs/guides/formats/%s",
 			fileExtension, formatExtension, formatName, file, formatName,
 		)
 	}
